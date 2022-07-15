@@ -6,6 +6,7 @@ import java.util.UUID;
 
 /**
  * A short, unambiguous and URL-safe UUID
+ * adapted to match lithammer go shortuuid implementation
  *
  * @author Harpreet Singh
  */
@@ -61,8 +62,8 @@ public final class ShortUuid {
         public ShortUuid build(UUID uuid) {
             String uuidStr = uuid.toString().replaceAll("-", "");
 
-            Double factor = Math.log(25d) / Math.log(alphabetSize);
-            Double length = Math.ceil(factor * 16);
+            Double factor = Math.log(Math.pow(2,128)) / Math.log(alphabetSize);
+            Double length = Math.ceil(factor);
 
             BigInteger number = new BigInteger(uuidStr, 16);
             String encoded = encode(number, alphabet, length.intValue());
@@ -71,7 +72,7 @@ public final class ShortUuid {
         }
 
         public String decode(String shortUuid) {
-            return decode(shortUuid.toCharArray(), alphabet);
+            return decode(new StringBuilder(shortUuid).reverse().toString().toCharArray(), alphabet);
         }
 
         private String encode(final BigInteger bigInt, final char[] alphabet, final int padToLen) {
@@ -91,7 +92,7 @@ public final class ShortUuid {
                     shortUuid.append(alphabet[0]);
             }
 
-            return shortUuid.toString();
+            return shortUuid.reverse().toString();
         }
 
         private String decode(final char[] encoded, final char[] alphabet) {
