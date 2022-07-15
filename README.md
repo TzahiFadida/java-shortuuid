@@ -1,3 +1,7 @@
+NOTES: this is a modification to the original code to match lithammer golang implementation when decoding and encoding v4:
+https://github.com/lithammer/shortuuid
+The differnce here is in calculating the "padToLen" and reversing the output of the encoding result string.
+
 # java-shortuuid
 [![Build Status](https://travis-ci.org/hsingh/java-shortuuid.svg?branch=master)](https://travis-ci.org/hsingh/java-shortuuid)
 
